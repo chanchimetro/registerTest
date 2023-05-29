@@ -1,8 +1,28 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import './Register.css';
 
 function Register() {
-    const [formValues, setFormValues] = UseState({});
+    const [formValues, setFormValues] = useState({
+        nombre: 'default',
+        usuario: 'default',
+        email: 'default@default.com',
+        wallet: '1234567890',
+        constrasena: 'default',
+    });
+
+    function handleChanges(e) {
+        e.preventDefault();
+        let objeto = {
+            nombre: e.target.name.value,
+            usuario: e.target.username.value,
+            email: e.target.email.value,
+            wallet: e.target.wallet.value,
+            contrasena: e.target.password.value
+        }
+        setFormValues(objeto);
+        console.log(formValues);
+        console.log(objeto);
+    }
 
   return (
     <div className="container">
@@ -11,7 +31,7 @@ function Register() {
             <div className="card">
                 <h2 className="card-title text-center">Register</h2>
                 <div className="card-body py-md-4">
-                        <form>
+                        <form onSubmit={(e) => handleChanges(e)}>
                             <div className="form-group">
                                 <input type="text" className="form-control" id="name" placeholder="Name"/>
                                 <input type="text" className="form-control" id="username" placeholder="Username"/>
@@ -22,7 +42,7 @@ function Register() {
                             </div>
                             <div className="d-flex flex-row align-items-center justify-content-between">
                                 <a href="#">Login</a>
-                                <button className="btn btn-primary" onClick={handleChanges}>Create Account</button>
+                                <button className="btn btn-primary" type='submit'>Create Account</button>
                             </div>
                         </form>
                     </div>
