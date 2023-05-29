@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import './Register.css';
 
 function Register() {
@@ -11,17 +12,20 @@ function Register() {
     });
 
     function handleChanges(e) {
-        e.preventDefault();
-        let objeto = {
-            nombre: e.target.name.value,
-            usuario: e.target.username.value,
-            email: e.target.email.value,
-            wallet: e.target.wallet.value,
-            contrasena: e.target.password.value
-        }
-        setFormValues(objeto);
-        console.log(formValues);
-        console.log(objeto);
+        axios.post('10.152.2.102/api/v0/registrarUsuario', {
+            params: {
+              ID: 12345
+            }
+          })
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          })
+          .finally(function () {
+            // always executed
+          });          
     }
 
   return (
