@@ -1,31 +1,38 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+
 import './Register.css';
 
-function Register() {
-    const [formValues, setFormValues] = useState({
-        nombre: 'default',
-        usuario: 'default',
-        email: 'default@default.com',
-        wallet: '1234567890',
-        constrasena: 'default',
-    });
+let url = "http://190.245.165.87:4433/api/auth/registro";
 
+async function postData(url = "", data = {}) {
+  const response = await fetch(url, {
+    method: "POST", // *GET, POST, PUT, DELETE, etc.
+    mode: "no-cors", // no-cors, *cors, same-origin
+    cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: "same-origin", // include, *same-origin, omit
+    headers: {
+      "Content-Type": "application/json",
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    redirect: "follow", // manual, *follow, error
+    referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    body: JSON.stringify(data),
+  });
+  return response.text();
+}
+
+function Register() {
     function handleChanges(e) {
-        axios.post('10.152.2.102/api/v0/registrarUsuario', {
-            params: {
-              ID: 12345
-            }
-          })
-          .then(function (response) {
-            console.log(response);
-          })
-          .catch(function (error) {
-            console.log(error);
-          })
-          .finally(function () {
-            // always executed
-          });          
+      e.preventDefault();
+      let data = {
+        email: e.target.email.value,
+        nombreusuario: e.target.username.value,
+        contrasenna: e.target.password.value,
+        tipousuario: "Prestatario"
+      };
+      console.log(JSON.stringify(data))
+      console.log(postData(url, data));
     }
 
   return (
@@ -37,12 +44,10 @@ function Register() {
                 <div className="card-body py-md-4">
                         <form onSubmit={(e) => handleChanges(e)}>
                             <div className="form-group">
-                                <input type="text" className="form-control" id="name" placeholder="Name"/>
                                 <input type="text" className="form-control" id="username" placeholder="Username"/>
                                 <input type="email" className="form-control" id="email" placeholder="Email"/>
-                                <input type="text" className="form-control" id="wallet" placeholder="Wallet"/>
                                 <input type="password" className="form-control" id="password" placeholder="Password"/>
-                                <input type="password" className="form-control" id="confirm-password" placeholder="Confirm password"/>
+
                             </div>
                             <div className="d-flex flex-row align-items-center justify-content-between">
                                 <a href="#">Login</a>
