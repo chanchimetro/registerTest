@@ -3,23 +3,12 @@ import axios from 'axios';
 
 import './Register.css';
 
-let url = "http://190.245.165.87:4433/api/auth/registro";
+let url = "https://10.152.2.102:4433/api/auth/registro";
 
 async function postData(url = "", data = {}) {
-  const response = await fetch(url, {
-    method: "POST", // *GET, POST, PUT, DELETE, etc.
-    mode: "no-cors", // no-cors, *cors, same-origin
-    cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-    credentials: "same-origin", // include, *same-origin, omit
-    headers: {
-      "Content-Type": "application/json",
-      // 'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    redirect: "follow", // manual, *follow, error
-    referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-    body: JSON.stringify(data),
-  });
-  return response.text();
+  const resp = axios.post(url, data);
+  //console.log("POSTDATA ", resp);
+  return resp;
 }
 
 function Register() {
@@ -47,7 +36,6 @@ function Register() {
                                 <input type="text" className="form-control" id="username" placeholder="Username"/>
                                 <input type="email" className="form-control" id="email" placeholder="Email"/>
                                 <input type="password" className="form-control" id="password" placeholder="Password"/>
-
                             </div>
                             <div className="d-flex flex-row align-items-center justify-content-between">
                                 <a href="#">Login</a>
